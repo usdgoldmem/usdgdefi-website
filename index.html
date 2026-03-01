@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USDG | Gold-Backed DeFi Ecosystem</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --gold: #FFD700;
+            --gold-dark: #B8860B;
+            --dark: #0a0a0a;
+            --card: rgba(255,215,0,0.03);
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark);
+            color: white;
+            line-height: 1.6;
+        }
+        
+        .bg-anim {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(255,215,0,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(0,212,255,0.1) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 1.5rem 5%;
+            background: rgba(10,10,10,0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,215,0,0.1);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { 
+            color: #888; 
+            text-decoration: none; 
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: var(--gold); }
+        
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 5% 4rem;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1.5rem;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero p {
+            color: #888;
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 0.5rem;
+            transition: 0.3s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+            box-shadow: 0 10px 40px rgba(255,215,0,0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 60px rgba(255,215,0,0.4);
+        }
+        
+        .btn-secondary {
+            border: 2px solid rgba(255,215,0,0.3);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--gold);
+            background: rgba(255,215,0,0.1);
+        }
+        
+        .coin-box {
+            width: 250px; height: 250px;
+            margin: 3rem auto;
+            perspective: 1000px;
+        }
+        
+        .coin {
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FFD700, #FFA500, #FFD700);
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotate 15s linear infinite;
+            box-shadow: 0 0 60px rgba(255,215,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            font-weight: 700;
+            color: #000;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+        
+        section { padding: 5rem 5%; }
+        
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 3rem;
+        }
+        
+        .big-blocks {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .big-block {
+            background: var(--card);
+            border: 1px solid rgba(255,215,0,0.1);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .big-block::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 4px;
+            background: linear-gradient(90deg, #FFD700, #FFA500);
+        }
+        
+        .big-block h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8rem;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .big-block p {
+            color: #ccc;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .stat-card {
+            background: var(--card);
+            border: 1px solid rgba(255,215,0,0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: 0.3s;
+            position: relative;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255,215,0,0.3);
+            box-shadow: 0 10px 30px rgba(255,215,0,0.1);
+        }
+        
+        .stat-number {
+            position: absolute;
+            top: 10px; right: 15px;
+            font-size: 0.8rem;
+            color: rgba(255,215,0,0.3);
+            font-weight: 700;
+        }
+        
+        .stat-icon {
+            width: 50px; height: 50px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: #000;
+            margin-bottom: 1rem;
+        }
+        
+        .stat-card h4 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+        
+        .stat-card p {
+            font-size: 0.85rem;
+            color: #888;
+            line-height: 1.5;
+        }
+        
+        .contracts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .contract-card {
+            background: var(--card);
+            border: 1px solid rgba(255,215,0,0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .chain-icon {
+            width: 70px; height: 70px;
+            margin: 0 auto 1rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+        }
+        
+        .bnb { background: #F3BA2F; color: #000; }
+        .eth { background: #627EEA; color: #fff; }
+        .arb { background: #28A0F0; color: #fff; }
+        .tron { background: #FF060A; color: #fff; }
+        
+        .contract-addr {
+            font-family: monospace;
+            font-size: 0.8rem;
+            background: rgba(0,0,0,0.3);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            word-break: break-all;
+            color: #888;
+        }
+        
+        .copy-btn {
+            background: rgba(255,215,0,0.1);
+            border: 1px solid rgba(255,215,0,0.3);
+            color: var(--gold);
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .copy-btn:hover {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+        }
+        
+        footer {
+            background: #050505;
+            border-top: 1px solid rgba(255,215,0,0.1);
+            padding: 4rem 5% 2rem;
+            text-align: center;
+        }
+        
+        .socials {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .socials a {
+            width: 50px; height: 50px;
+            background: rgba(255,215,0,0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            font-size: 1.3rem;
+            transition: 0.3s;
+        }
+        
+        .socials a:hover {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+            transform: translateY(-5px);
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .stats-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-anim"></div>
+    
+    <nav>
+        <div class="logo">USDG</div>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#position">Position</a></li>
+            <li><a href="#stats">Stats</a></li>
+            <li><a href="#contracts">Contracts</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div>
+            <h1>The Future of <span class="gradient-text">Gold-Backed DeFi</span></h1>
+            <p>Next-generation utility token powering liquidity, ecosystem incentives, and long-term partnerships across 4 chains.</p>
+            
+            <div>
+                <a href="https://pancakeswap.finance/swap?outputCurrency=0x82248d53de2b7608caf53978a8e8c238dc42403a" class="btn btn-primary" target="_blank">
+                    <i class="fas fa-rocket"></i> Buy USDG
+                </a>
+                <a href="https://www.geckoterminal.com/ru/arbitrum/pools/0xe4c5b9eab6d9861d4ded42c3f44224a22aae77d5" class="btn btn-secondary" target="_blank">
+                    <i class="fas fa-chart-line"></i> Charts
+                </a>
+            </div>
+            
+            <div class="coin-box">
+                <div class="coin">$</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2 class="section-title">Why <span class="gradient-text">USDG?</span></h2>
+        <p class="section-subtitle">Our strategic position in DeFi ecosystem</p>
+        
+        <div class="big-blocks">
+            <div class="big-block">
+                <h3><i class="fas fa-crown"></i> Premium DeFi Position</h3>
+                <p>USDG occupies a unique position in the decentralized finance landscape as a gold-backed utility token with multi-chain presence. Unlike volatile meme coins or complex algorithmic stablecoins, we offer tangible value proposition backed by transparent treasury operations. Our smart contracts are immutable, with no hidden mint functions or blacklist capabilities, ensuring true decentralization and trustless operation.</p>
+            </div>
+            
+            <div class="big-block">
+                <h3><i class="fas fa-shield-alt"></i> Security First Approach</h3>
+                <p>Security is not an afterthought—it's our foundation. With no mint, pause, or blacklist functions, USDG contracts are truly immutable. Team allocations are locked in time-vested multisig wallets with 24-month linear vesting and 6-month cliff. Our treasury operations are fully transparent, with all addresses publicly disclosed and trackable on-chain. This approach eliminates rug pull risks and demonstrates long-term commitment.</p>
+            </div>
+            
+            <div class="big-block">
+                <h3><i class="fas fa-water"></i> Deep Liquidity Strategy</h3>
+                <p>25% of total supply is dedicated to liquidity and market making across major DEX venues. We concentrate liquidity on BNB Chain through PancakeSwap while maintaining bridges to Arbitrum, Ethereum, and TRON. This multi-chain approach minimizes slippage for retail traders and prevents mercenary capital extraction through carefully designed vesting-aligned rewards and cooldown mechanisms.</p>
+            </div>
+            
+            <div class="big-block">
+                <h3><i class="fas fa-users"></i> Community-Driven Growth</h3>
+                <p>15% of tokens are allocated for ecosystem incentives, rewarding early adopters, liquidity providers, and community contributors. We don't believe in paid celebrity endorsements or fake hype. Instead, we focus on organic growth through real utility, transparent communication, and consistent delivery. Our Telegram and Twitter communities are actively moderated by team members who are invested in long-term success.</p>
+            </div>
+            
+            <div class="big-block">
+                <h3><i class="fas fa-road"></i> Roadmap to 2026</h3>
+                <p>Q4 2025 focuses on website launch, DEX liquidity seeding, and community foundation building. Q1 2026 brings strategic partnerships with established DeFi protocols, CEX listings for broader accessibility, and expanded cross-chain integrations. Our vision extends beyond speculation—we're building infrastructure for the next generation of decentralized finance, with USDG as the core utility token.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="stats">
+        <h2 class="section-title">Ecosystem <span class="gradient-text">Metrics</span></h2>
+        <p class="section-subtitle">50 key indicators of our growth</p>
+        
+        <div class="stats-grid">
+            <div class="stat-card"><span class="stat-number">01</span><div class="stat-icon"><i class="fas fa-coins"></i></div><h4>Total Supply</h4><p>50,000,000,000 USDG fixed supply, no inflation</p></div>
+            <div class="stat-card"><span class="stat-number">02</span><div class="stat-icon"><i class="fas fa-lock"></i></div><h4>No Mint Function</h4><p>Immutable contract, no new tokens can be created</p></div>
+            <div class="stat-card"><span class="stat-number">03</span><div class="stat-icon"><i class="fas fa-ban"></i></div><h4>No Blacklist</h4><p>Truly decentralized, no account can be frozen</p></div>
+            <div class="stat-card"><span class="stat-number">04</span><div class="stat-icon"><i class="fas fa-pause-circle"></i></div><h4>No Pause</h4><p>Contract cannot be stopped by anyone</p></div>
+            <div class="stat-card"><span class="stat-number">05</span><div class="stat-icon"><i class="fas fa-landmark"></i></div><h4>Treasury</h4><p>40% reserved for operational growth and stability</p></div>
+            <div class="stat-card"><span class="stat-number">06</span><div class="stat-icon"><i class="fas fa-water"></i></div><h4>Liquidity</h4><p>25% allocated to DEX liquidity and market making</p></div>
+            <div class="stat-card"><span class="stat-number">07</span><div class="stat-icon"><i class="fas fa-gift"></i></div><h4>Ecosystem</h4><p>15% for community rewards and incentives</p></div>
+            <div class="stat-card"><span class="stat-number">08</span><div class="stat-icon"><i class="fas fa-handshake"></i></div><h4>Partnerships</h4><p>10% for strategic alliances and integrations</p></div>
+            <div class="stat-card"><span class="stat-number">09</span><div class="stat-icon"><i class="fas fa-users"></i></div><h4>Team Vesting</h4><p>10% with 24-month vesting, 6-month cliff</p></div>
+            <div class="stat-card"><span class="stat-number">10</span><div class="stat-icon"><i class="fas fa-cube"></i></div><h4>BNB Chain</h4><p>Primary deployment on BSC for low fees</p></div>
+            <div class="stat-card"><span class="stat-number">11</span><div class="stat-icon"><i class="fab fa-ethereum"></i></div><h4>Ethereum</h4><p>Available on mainnet for maximum security</p></div>
+            <div class="stat-card"><span class="stat-number">12</span><div class="stat-icon"><i class="fas fa-layer-group"></i></div><h4>Arbitrum</h4><p>L2 scaling solution for fast transactions</p></div>
+            <div class="stat-card"><span class="stat-number">13</span><div class="stat-icon"><i class="fas fa-link"></i></div><h4>TRON</h4><p>Asian market access through TRC-20</p></div>
+            <div class="stat-card"><span class="stat-number">14</span><div class="stat-icon"><i class="fas fa-chart-line"></i></div><h4>CoinMarketCap</h4><p>Listed and tracked on major aggregator</p></div>
+            <div class="stat-card"><span class="stat-number">15</span><div class="stat-icon"><i class="fas fa-exchange-alt"></i></div><h4>PancakeSwap</h4><p>Primary DEX for trading on BNB Chain</p></div>
+            <div class="stat-card"><span class="stat-number">16</span><div class="stat-icon"><i class="fas fa-terminal"></i></div><h4>GeckoTerminal</h4><p>Real-time charting and analytics</p></div>
+            <div class="stat-card"><span class="stat-number">17</span><div class="stat-icon"><i class="fas fa-search"></i></div><h4>BscScan Verified</h4><p>Contract source code verified and public</p></div>
+            <div class="stat-card"><span class="stat-number">18</span><div class="stat-icon"><i class="fas fa-shield-alt"></i></div><h4>Multisig</h4><p>All treasury wallets require multiple signatures</p></div>
+            <div class="stat-card"><span class="stat-number">19</span><div class="stat-icon"><i class="fas fa-clock"></i></div><h4>Time-Locked</h4><p>Team tokens locked for minimum 6 months</p></div>
+            <div class="stat-card"><span class="stat-number">20</span><div class="stat-icon"><i class="fas fa-eye"></i></div><h4>Transparent</h4><p>All wallet addresses publicly disclosed</p></div>
+            <div class="stat-card"><span class="stat-number">21</span><div class="stat-icon"><i class="fas fa-percentage"></i></div><h4>Zero Tax</h4><p>No buy or sell tax on transactions</p></div>
+            <div class="stat-card"><span class="stat-number">22</span><div class="stat-icon"><i class="fas fa-infinity"></i></div><h4>Fixed Supply</h4><p>No burn mechanism, supply never changes</p></div>
+            <div class="stat-card"><span class="stat-number">23</span><div class="stat-icon"><i class="fas fa-mobile-alt"></i></div><h4>Mobile Ready</h4><p>Fully responsive design for all devices</p></div>
+            <div class="stat-card"><span class="stat-number">24</span><div class="stat-icon"><i class="fas fa-globe"></i></div><h4>Global Access</h4><p>Available worldwide without restrictions</p></div>
+            <div class="stat-card"><span class="stat-number">25</span><div class="stat-icon"><i class="fas fa-robot"></i></div><h4>Automated</h4><p>Smart contracts execute without intermediaries</p></div>
+            <div class="stat-card"><span class="stat-number">26</span><div class="stat-icon"><i class="fas fa-bolt"></i></div><h4>Fast Transactions</h4><p>3-second block time on BNB Chain</p></div>
+            <div class="stat-card"><span class="stat-number">27</span><div class="stat-icon"><i class="fas fa-dollar-sign"></i></div><h4>Low Fees</h4><p>Cents per transaction, not dollars</p></div>
+            <div class="stat-card"><span class="stat-number">28</span><div class="stat-icon"><i class="fas fa-code"></i></div><h4>Open Source</h4><p>Contract code verified and auditable</p></div>
+            <div class="stat-card"><span class="stat-number">29</span><div class="stat-icon"><i class="fas fa-balance-scale"></i></div><h4>Fair Launch</h4><p>No presale, no private sale, equal access</p></div>
+            <div class="stat-card"><span class="stat-number">30</span><div class="stat-icon"><i class="fas fa-rocket"></i></div><h4>Growth Focus</h4><p>Long-term development over short pumps</p></div>
+            <div class="stat-card"><span class="stat-number">31</span><div class="stat-icon"><i class="fas fa-headset"></i></div><h4>24/7 Support</h4><p>Community managers always available</p></div>
+            <div class="stat-card"><span class="stat-number">32</span><div class="stat-icon"><i class="fas fa-newspaper"></i></div><h4>Regular Updates</h4><p>Weekly progress reports to community</p></div>
+            <div class="stat-card"><span class="stat-number">33</span><div class="stat-icon"><i class="fas fa-chart-pie"></i></div><h4>Diversified</h4><p>Multiple revenue streams planned</p></div>
+            <div class="stat-card"><span class="stat-number">34</span><div class="stat-icon"><i class="fas fa-graduation-cap"></i></div><h4>Educational</h4><p>Resources for new DeFi users</p></div>
+            <div class="stat-card"><span class="stat-number">35</span><div class="stat-icon"><i class="fas fa-leaf"></i></div><h4>Sustainable</h4><p>Designed for long-term viability</p></div>
+            <div class="stat-card"><span class="stat-number">36</span><div class="stat-icon"><i class="fas fa-puzzle-piece"></i></div><h4>Composable</h4><p>Integrates with other DeFi protocols</p></div>
+            <div class="stat-card"><span class="stat-number">37</span><div class="stat-icon"><i class="fas fa-fingerprint"></i></div><h4>Unique</h4><p>Distinct value proposition in market</p></div>
+            <div class="stat-card"><span class="stat-number">38</span><div class="stat-icon"><i class="fas fa-trophy"></i></div><h4>Ambitious</h4><p>Clear goals for 2025-2026</p></div>
+            <div class="stat-card"><span class="stat-number">39</span><div class="stat-icon"><i class="fas fa-heart"></i></div><h4>Community First</h4><p>Decisions consider holder interests</p></div>
+            <div class="stat-card"><span class="stat-number">40</span><div class="stat-icon"><i class="fas fa-sync"></i></div><h4>Cross-Chain</h4><p>Seamless bridging between networks</p></div>
+            <div class="stat-card"><span class="stat-number">41</span><div class="stat-icon"><i class="fas fa-wallet"></i></div><h4>Wallet Compatible</h4><p>Works with MetaMask, Trust, etc.</p></div>
+            <div class="stat-card"><span class="stat-number">42</span><div class="stat-icon"><i class="fas fa-exchange-alt"></i></div><h4>Swappable</h4><p>Easy exchange on major DEXs</p></div>
+            <div class="stat-card"><span class="stat-number">43</span><div class="stat-icon"><i class="fas fa-chart-bar"></i></div><h4>Trackable</h4><p>Portfolio tracking supported</p></div>
+            <div class="stat-card"><span class="stat-number">44</span><div class="stat-icon"><i class="fas fa-bell"></i></div><h4>Alert Ready</h4><p>Price alerts on major platforms</p></div>
+            <div class="stat-card"><span class="stat-number">45</span><div class="stat-icon"><i class="fas fa-language"></i></div><h4>Multilingual</h4><p>Community speaks 10+ languages</p></div>
+            <div class="stat-card"><span class="stat-number">46</span><div class="stat-icon"><i class="fas fa-video"></i></div><h4>Video Content</h4><p>Tutorials and explainers available</p></div>
+            <div class="stat-card"><span class="stat-number">47</span><div class="stat-icon"><i class="fas fa-microphone"></i></div><h4>AMA Sessions</h4><p>Regular live Q&A with team</p></div>
+            <div class="stat-card"><span class="stat-number">48</span><div class="stat-icon"><i class="fas fa-star"></i></div><h4>Quality Focus</h4><p>Excellence over quantity approach</p></div>
+            <div class="stat-card"><span class="stat-number">49</span><div class="stat-icon"><i class="fas fa-flag"></i></div><h4>Milestone Driven</h4><p>Clear achievements celebrated</p></div>
+            <div class="stat-card"><span class="stat-number">50</span><div class="stat-icon"><i class="fas fa-infinity"></i></div><h4>Future Proof</h4><p>Built to last beyond trends</p></div>
+        </div>
+    </section>
+
+    <section id="contracts">
+        <h2 class="section-title">Contract <span class="gradient-text">Addresses</span></h2>
+        <p class="section-subtitle">Verified on all explorers</p>
+        
+        <div class="contracts">
+            <div class="contract-card">
+                <div class="chain-icon bnb"><i class="fas fa-cube"></i></div>
+                <h3>BNB Chain</h3>
+                <p class="contract-addr">0x82248D53De2B7608cAF53978A8E8C238DC42403a</p>
+                <button class="copy-btn" onclick="navigator.clipboard.writeText('0x82248D53De2B7608cAF53978A8E8C238DC42403a')">
+                    <i class="fas fa-copy"></i> Copy
+                </button>
+            </div>
+            
+            <div class="contract-card">
+                <div class="chain-icon eth"><i class="fab fa-ethereum"></i></div>
+                <h3>Ethereum</h3>
+                <p class="contract-addr">0x82248D53De2B7608cAF53978A8E8C238DC42403a</p>
+                <button class="copy-btn" onclick="navigator.clipboard.writeText('0x82248D53De2B7608cAF53978A8E8C238DC42403a')">
+                    <i class="fas fa-copy"></i> Copy
+                </button>
+            </div>
+            
+            <div class="contract-card">
+                <div class="chain-icon arb"><i class="fas fa-layer-group"></i></div>
+                <h3>Arbitrum</h3>
+                <p class="contract-addr">0x82248D53De2B7608cAF53978A8E8C238DC42403a</p>
+                <button class="copy-btn" onclick="navigator.clipboard.writeText('0x82248D53De2B7608cAF53978A8E8C238DC42403a')">
+                    <i class="fas fa-copy"></i> Copy
+                </button>
+            </div>
+            
+            <div class="contract-card">
+                <div class="chain-icon tron"><i class="fas fa-link"></i></div>
+                <h3>TRON</h3>
+                <p class="contract-addr">TWg25kRwooVkxKPaPkdx7MApLxNbz6VrBd</p>
+                <button class="copy-btn" onclick="navigator.clipboard.writeText('TWg25kRwooVkxKPaPkdx7MApLxNbz6VrBd')">
+                    <i class="fas fa-copy"></i> Copy
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <h3 class="section-title">Join <span class="gradient-text">USDG</span></h3>
+        <p style="color: #888; margin-bottom: 2rem;">Be part of the future of DeFi</p>
+        
+        <div class="socials">
+            <a href="https://t.me/usdggold" target="_blank"><i class="fab fa-telegram"></i></a>
+            <a href="https://x.com/UsdMem" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://github.com/usdgoldmem" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="mailto:support@usdgdefi.com"><i class="fas fa-envelope"></i></a>
+        </div>
+        
+        <p style="color: #666; font-size: 0.9rem;">
+            © 2025 USDG. All rights reserved. | 
+            <a href="https://coinmarketcap.com/currencies/usdgold/" target="_blank" style="color: var(--gold);">CoinMarketCap</a>
+        </p>
+    </footer>
+</body>
+</html>
